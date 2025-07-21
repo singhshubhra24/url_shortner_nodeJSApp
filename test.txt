@@ -1,0 +1,8 @@
+We r creating 1 url shortner application-
+
+routes==>
+
+1-GET /:id redirect to the user to original url
+2-GET /URL/analytics/:id - returns the clicks to the rovided short URL
+
+3-POST /url -generates the new short URL n returns the shortned url in the format of example.com/random-id
