@@ -9,9 +9,11 @@
   "author": "shubhra",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^4.18.2",
     "mongoose": "^8.16.4",
-    "shortid": "^2.2.17"
+    "shortid": "^2.2.17",
+    "uuid": "^11.1.0"
   }
 }

@@ -1,10 +1,12 @@
 const express = require("express")
-const mongoose = require("mongoose")
 const path = require("path")
+const cookieParser = require("cookie-parser")
+const {restrictToLoggedUserOnly, checkAuth} = require("./middlewares/auth")
 const {URL} = require("./models/url")
 
 const {dbConnector} = require("./connection")
 const urlRoute = require("./routes/url")
+const userRoute = require("./routes/user")
 const staticRoute = require("./routes/staticRouter")
 
 
@@ -15,16 +17,22 @@ const app = express();
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 
-app.use("/url", urlRoute);
-app.use("/", staticRoute);
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+app.use(cookieParser());
+
+
+app.use("/url", restrictToLoggedUserOnly, urlRoute);
+app.use("/user", userRoute);
+app.use("/", checkAuth, staticRoute);
+
+
 
 app.get("/url/:shortid", async(req, res) => {
     console.log("i m inside get req")
     const shortId = req.params.shortid;
-    console.log(shortId)
+    // console.log(shortId)
     const entry = await URL.findOneAndUpdate({
         shortId
     }, {
