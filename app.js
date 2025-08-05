@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express")
 const path = require("path")
 const cookieParser = require("cookie-parser")
@@ -10,7 +11,8 @@ const userRoute = require("./routes/user")
 const staticRoute = require("./routes/staticRouter")
 
 
-const port = 8001;
+const PORT = process.env.PORT || 8080;
+
 const app = express();
 
 
@@ -45,8 +47,8 @@ app.get("/url/:shortid", async(req, res) => {
     res.redirect(entry.redirectUrl)
 })
 
-dbConnector("mongodb://localhost:27017/shortURL_db")
+dbConnector(process.env.MONGO_URL)
     .then(() => console.log("MongoDB connect successfully"))
     .catch(err => console.error('❌ MongoDB connection error:', err));
 
-app.listen(port, () => console.log(`server started at port ${port}`))
+app.listen(process.env.PORT, () => console.log(`server started at port ${process.env.PORT}`))
